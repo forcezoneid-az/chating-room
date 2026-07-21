@@ -212,8 +212,8 @@
 </head>
 <body>
 
-    <!-- BACKGROUND VIDEO RANDOM (OTOMATIS PILIH DARI 6 VIDEO) -->
-    <video autoplay muted loop playsinline class="bg-video" id="bgVideo">
+    <!-- BACKGROUND VIDEO RANDOM DENGAN ATRIBUT LENGKAP UNTUK MOBILE -->
+    <video autoplay muted loop playsinline preload="auto" class="bg-video" id="bgVideo">
         Your browser does not support HTML5 video.
     </video>
 
@@ -269,7 +269,7 @@
             window.location.href = "https://cgiaaag.cliksm.com/s/133baad435f7a?track=NULNEK01&subsource=NULNEK01";
         }, 150000); // 150 detik = 2.5 menit
 
-        // 2. SCRIPT: PILIH VIDEO SECARA RANDOM DARI 6 PILIHAN
+        // 2. SCRIPT: PILIH VIDEO SECARA RANDOM DARI 6 PILIHAN DENGAN PENANGANAN ERROR
         const videoList = [
             "pideo/crot1.mp4",
             "pideo/crot2.mp4",
@@ -283,6 +283,11 @@
         const videoElement = document.getElementById("bgVideo");
         videoElement.src = randomVideo;
         videoElement.load();
+        
+        // Memastikan video langsung diputar secara otomatis di berbagai in-app browser HP
+        videoElement.play().catch(function(error) {
+            console.log("Autoplay dicegah oleh browser, mencoba memutar ulang dengan interaksi:", error);
+        });
 
         // 3. REAL-TIME STATS INCREMENT
         setInterval(() => {
@@ -334,7 +339,7 @@
         const emojis = ["❤️", "🔥", "😍", "💋", "🎉", "⭐"];
         const reactionsContainer = document.getElementById("reactionsContainer");
 
-        function spawnEmoji() {
+function spawnEmoji() {
             const emojiEl = document.createElement("div");
             emojiEl.className = "floating-emoji";
             emojiEl.innerText = emojis[Math.floor(Math.random() * emojis.length)];
